@@ -414,6 +414,96 @@
     .nav-links a:hover { color: var(--w); }
     .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
 
+    .nav-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-left: 8px;
+      padding: 0;
+      border: 1px solid var(--bd2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--w);
+      cursor: pointer;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .nav-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+    .nav-menu-icon,
+    .nav-menu-icon::before,
+    .nav-menu-icon::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform 0.3s var(--ease-out), opacity 0.2s;
+    }
+    .nav-menu-icon {
+      position: relative;
+    }
+    .nav-menu-icon::before,
+    .nav-menu-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+    .nav-menu-icon::before { top: -6px; }
+    .nav-menu-icon::after { top: 6px; }
+    .nav-menu-btn.is-open .nav-menu-icon { background: transparent; }
+    .nav-menu-btn.is-open .nav-menu-icon::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+    .nav-menu-btn.is-open .nav-menu-icon::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    .nav-mobile-menu {
+      display: none;
+    }
+
+    .nav-mobile-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .nav-mobile-links a {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: var(--g1);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-mobile-links a:hover,
+    .nav-mobile-links a:focus-visible {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--w);
+    }
+    .nav-mobile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--bd);
+    }
+    .nav-mobile-actions .nav-btn {
+      justify-content: center;
+      text-align: center;
+    }
+
     /* ══════════════════════════════════════════════════════════
        HERO
     ══════════════════════════════════════════════════════════ */
@@ -2179,10 +2269,40 @@
        RESPONSIVE
     ══════════════════════════════════════════════════════════ */
     @media (max-width: 980px) {
-      nav { padding: 16px 24px; }
-      nav.scrolled { padding: 12px 24px; }
-      .nav-links { display: none; }
+      nav {
+        padding: 12px 16px;
+        z-index: 1100;
+        background: rgba(15, 22, 35, 0.94);
+        border-bottom: 1px solid var(--bd);
+      }
+      nav.scrolled {
+        padding: 10px 16px;
+        background: rgba(10, 14, 22, 0.96);
+      }
+      .nav-links,
+      .nav-actions { display: none; }
       .nav-brand-tag { display: none; }
+      .nav-brand { margin-right: auto; }
+      .nav-menu-btn {
+        display: inline-flex;
+        cursor: pointer;
+      }
+      .nav-mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        inset: 0;
+        z-index: 1095;
+        padding: 76px 20px 32px;
+        padding-top: calc(72px + env(safe-area-inset-top, 0px));
+        background: rgba(10, 14, 22, 0.98);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-mobile-menu.is-open {
+        display: flex;
+      }
+      body.nav-open { overflow: hidden; }
       .nav-btn-demo { padding: 8px 14px; }
       .nav-btn-login { padding: 8px 12px; font-size: 12px; }
       .hero-zone { height: 130vh; }
@@ -2257,7 +2377,28 @@
         AIr Login
       </a>
     </div>
+    <button type="button" class="nav-menu-btn" id="navMenuBtn" aria-expanded="false" aria-controls="navMobileMenu" aria-label="Open menu">
+      <span class="nav-menu-icon" aria-hidden="true"></span>
+    </button>
   </nav>
+
+  <div class="nav-mobile-menu" id="navMobileMenu" aria-hidden="true">
+    <ul class="nav-mobile-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+    </ul>
+    <div class="nav-mobile-actions">
+      <a href="#cta" class="nav-btn nav-btn-demo">Request Demo</a>
+      <a href="#" class="nav-btn nav-btn-login">
+        <span class="logo-glare logo-glare--btn">
+          <img src="assets/coair-logo.jpg" alt="" class="brand-logo-img" />
+        </span>
+        AIr Login
+      </a>
+    </div>
+  </div>
 
 
   <!-- ═══════════════════════════════════════════════
@@ -3004,6 +3145,38 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 24);
     }, { passive: true });
+
+    /* ─── Mobile nav menu ────────────────────────────── */
+    const navMenuBtn = document.getElementById('navMenuBtn');
+    const navMobileMenu = document.getElementById('navMobileMenu');
+
+    function setNavMenuOpen(open) {
+      if (!navMenuBtn || !navMobileMenu) return;
+      navMenuBtn.classList.toggle('is-open', open);
+      navMobileMenu.classList.toggle('is-open', open);
+      navMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navMenuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      navMobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.body.classList.toggle('nav-open', open);
+    }
+
+    if (navMenuBtn && navMobileMenu) {
+      navMenuBtn.addEventListener('click', () => {
+        setNavMenuOpen(!navMobileMenu.classList.contains('is-open'));
+      });
+
+      navMobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setNavMenuOpen(false));
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 980) setNavMenuOpen(false);
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') setNavMenuOpen(false);
+      });
+    }
 
 
     /* ─── Hero on-load reveal ──────────────────────── */
