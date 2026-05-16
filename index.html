@@ -1896,6 +1896,119 @@
       margin-bottom: 24px;
     }
 
+    .hover-footer__panel {
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .hover-footer__panel:last-of-type {
+      border-bottom: none;
+    }
+
+    .hover-footer__toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      margin: 0 0 24px;
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--w);
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hover-footer__chevron {
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--g2);
+      border-bottom: 2px solid var(--g2);
+      transform: rotate(45deg);
+      transition: transform 0.3s var(--ease-out), border-color 0.2s;
+    }
+
+    .hover-footer__panel-body {
+      overflow: hidden;
+    }
+
+    @media (max-width: 1023px) {
+      .hover-footer__grid {
+        gap: 0;
+        padding-bottom: 32px;
+      }
+
+      .hover-footer__brand {
+        padding-bottom: 24px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--bd);
+      }
+
+      .hover-footer__toggle {
+        margin-bottom: 0;
+        padding: 18px 0;
+      }
+
+      .hover-footer__heading {
+        margin-bottom: 0;
+      }
+
+      .hover-footer__panel-body {
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.4s var(--ease-out), opacity 0.3s, padding 0.3s;
+        padding-bottom: 0;
+      }
+
+      .hover-footer__panel.is-open .hover-footer__panel-body {
+        max-height: 280px;
+        opacity: 1;
+        padding-bottom: 20px;
+      }
+
+      .hover-footer__panel.is-open .hover-footer__chevron {
+        transform: rotate(-135deg);
+        border-color: var(--blue);
+      }
+
+      .hover-footer__panel.is-open .hover-footer__toggle {
+        color: var(--w);
+      }
+
+      .hover-footer__panel {
+        text-align: left;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hover-footer__panel {
+        border-bottom: none;
+      }
+
+      .hover-footer__toggle {
+        pointer-events: none;
+        cursor: default;
+        margin-bottom: 24px;
+        padding: 0;
+      }
+
+      .hover-footer__chevron {
+        display: none;
+      }
+
+      .hover-footer__panel-body {
+        max-height: none !important;
+        opacity: 1 !important;
+        padding-bottom: 0 !important;
+        overflow: visible;
+      }
+    }
+
     .hover-footer__links {
       list-style: none;
       display: flex;
@@ -2618,41 +2731,56 @@
           </p>
         </div>
 
-        <div>
-          <h4 class="hover-footer__heading">About Us</h4>
-          <ul class="hover-footer__links">
-            <li><a href="#" data-cursor="hover">Company</a></li>
-            <li><a href="#" data-cursor="hover">Meet the Team</a></li>
-            <li><a href="#" data-cursor="hover">Security &amp; Trust</a></li>
-            <li><a href="#cta" data-cursor="hover">Careers</a></li>
-          </ul>
+        <div class="hover-footer__panel" data-foot-panel>
+          <button type="button" class="hover-footer__toggle" aria-expanded="false" aria-controls="foot-panel-about" id="foot-panel-about-btn" data-cursor="hover">
+            <span>About Us</span>
+            <span class="hover-footer__chevron" aria-hidden="true"></span>
+          </button>
+          <div id="foot-panel-about" class="hover-footer__panel-body" role="region" aria-labelledby="foot-panel-about-btn">
+            <ul class="hover-footer__links">
+              <li><a href="#" data-cursor="hover">Company</a></li>
+              <li><a href="#" data-cursor="hover">Meet the Team</a></li>
+              <li><a href="#" data-cursor="hover">Security &amp; Trust</a></li>
+              <li><a href="#cta" data-cursor="hover">Careers</a></li>
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <h4 class="hover-footer__heading">Helpful Links</h4>
-          <ul class="hover-footer__links">
-            <li><a href="#" data-cursor="hover">FAQs</a></li>
-            <li><a href="#" data-cursor="hover">Support</a></li>
-            <li><a href="#cta" class="hover-footer__link-pulse" data-cursor="hover">Request Demo</a></li>
-          </ul>
+        <div class="hover-footer__panel" data-foot-panel>
+          <button type="button" class="hover-footer__toggle" aria-expanded="false" aria-controls="foot-panel-links" id="foot-panel-links-btn" data-cursor="hover">
+            <span>Helpful Links</span>
+            <span class="hover-footer__chevron" aria-hidden="true"></span>
+          </button>
+          <div id="foot-panel-links" class="hover-footer__panel-body" role="region" aria-labelledby="foot-panel-links-btn">
+            <ul class="hover-footer__links">
+              <li><a href="#" data-cursor="hover">FAQs</a></li>
+              <li><a href="#" data-cursor="hover">Support</a></li>
+              <li><a href="#cta" class="hover-footer__link-pulse" data-cursor="hover">Request Demo</a></li>
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <h4 class="hover-footer__heading">Contact Us</h4>
-          <ul class="hover-footer__contact">
-            <li>
-              <svg class="hover-footer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <a href="mailto:hello@coair.com" data-cursor="hover">hello@coair.com</a>
-            </li>
-            <li>
-              <svg class="hover-footer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              <a href="tel:+442000000000" data-cursor="hover">+44 20 0000 0000</a>
-            </li>
-            <li>
-              <svg class="hover-footer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-              <span>United Kingdom</span>
-            </li>
-          </ul>
+        <div class="hover-footer__panel" data-foot-panel>
+          <button type="button" class="hover-footer__toggle" aria-expanded="false" aria-controls="foot-panel-contact" id="foot-panel-contact-btn" data-cursor="hover">
+            <span>Contact Us</span>
+            <span class="hover-footer__chevron" aria-hidden="true"></span>
+          </button>
+          <div id="foot-panel-contact" class="hover-footer__panel-body" role="region" aria-labelledby="foot-panel-contact-btn">
+            <ul class="hover-footer__contact">
+              <li>
+                <svg class="hover-footer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <a href="mailto:hello@coair.com" data-cursor="hover">hello@coair.com</a>
+              </li>
+              <li>
+                <svg class="hover-footer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <a href="tel:+442000000000" data-cursor="hover">+44 20 0000 0000</a>
+              </li>
+              <li>
+                <svg class="hover-footer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>United Kingdom</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -3127,6 +3255,44 @@
       });
     });
 
+
+    /* ─── Hover footer: mobile accordion ─────────────── */
+    (function initFooterAccordion() {
+      const footMq = window.matchMedia('(max-width: 1023px)');
+      const footPanels = document.querySelectorAll('[data-foot-panel]');
+
+      function setPanelOpen(panel, open) {
+        const btn = panel.querySelector('.hover-footer__toggle');
+        panel.classList.toggle('is-open', open);
+        if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function closeAllFootPanels() {
+        footPanels.forEach(p => setPanelOpen(p, false));
+      }
+
+      function syncFootPanelsForViewport() {
+        if (!footMq.matches) {
+          footPanels.forEach(p => setPanelOpen(p, true));
+          return;
+        }
+        closeAllFootPanels();
+      }
+
+      footPanels.forEach(panel => {
+        const btn = panel.querySelector('.hover-footer__toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          if (!footMq.matches) return;
+          const willOpen = !panel.classList.contains('is-open');
+          closeAllFootPanels();
+          if (willOpen) setPanelOpen(panel, true);
+        });
+      });
+
+      footMq.addEventListener('change', syncFootPanelsForViewport);
+      syncFootPanelsForViewport();
+    })();
 
     /* ─── Hover footer: year + text reveal ───────────── */
     const footYear = document.getElementById('footYear');
